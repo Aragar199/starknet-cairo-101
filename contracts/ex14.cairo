@@ -39,7 +39,9 @@ func constructor{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr
 //
 
 @external
-func claim_points{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}() {
+func claim_points{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+    user_address: felt
+) {
     alloc_locals;
     // Reading caller address
     let (sender_address) = get_caller_address();
@@ -73,8 +75,8 @@ func claim_points{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_pt
     }
 
     // Checking if the user has validated the exercise before
-    validate_exercise(sender_address);
+    validate_exercise(user_address);
     // Sending points to the address specified as parameter
-    distribute_points(sender_address, 2);
+    distribute_points(user_address, 2);
     return ();
 }
